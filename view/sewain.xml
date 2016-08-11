@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="item_form_view">
+            <field name="name">item.form</field>
+            <field name="model">sewain.item</field>
+            <field name="arch" type="xml">
+                <form string="Item Form">
+                    <sheet>
+                        <group>
+                            <field name="nama"/>
+                            <field name="harga"/>
+                            <field name="jumlah"/>
+                            <field name="deskripsi"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_sewain_item_kanban">
+            <field name="name">sewain.item.kanban</field>
+            <field name="model">sewain.item</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="warna"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.warna.raw_value)}}
+                                                  oe_kanban_global_click_edit oe_semantic_html_override
+                                                  oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div t-attf-class="oe_kanban_content">
+                                    Nama :
+                                    <field name="nama"/>
+                                    <br/>
+                                    Jumlah : <field name="jumlah"/>
+                                    <br/>
+                                    Harga :
+                                    <field name="harga"/>
+                                </div>
+                                <div class="oe_dropdown_kanban pull-right">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-caret-down fa-lg"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Hapus</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="warna"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+        <record model="ir.actions.act_window" id="daftar_item_action">
+            <field name="name">Item</field>
+            <field name="res_model">sewain.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Tambahkan item baru
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="menu_utama_sewain" name="Sewain App"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="menu_sewain" name="Sewain"
+                  parent="menu_utama_sewain"/>
+        <!-- the following menuitem should appear *after*
+             its parent openacademy_menu and *after* its
+             action course_list_action -->
+        <menuitem id="menu_item" name="Item" parent="menu_sewain"
+                  action="daftar_item_action"/>
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+    </data>
+</openerp>

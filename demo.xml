@@ -1,0 +1,22 @@
+<openerp>
+    <data>
+        <record model="sewain.item" id="item01">
+            <field name="nama">Item 1</field>
+            <field name="harga">8000</field>
+            <field name="jumlah">40</field>
+            <field name="description">Deskripsi item 1
+            </field>
+        </record>
+        <record model="sewain.item" id="item02">
+            <field name="nama">Item 2</field>
+            <field name="harga">50000</field>
+            <field name="jumlah">2</field>
+            <!-- no description for this one -->
+        </record>
+        <record model="sewain.item" id="item03">
+            <field name="nama">Item 3</field>
+            <field name="harga">10000</field>
+            <field name="description">Deskripsi item 3</field>
+        </record>
+    </data>
+</openerp>
