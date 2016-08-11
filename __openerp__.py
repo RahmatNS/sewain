@@ -26,6 +26,7 @@
         # 'security/ir.model.access.csv',
         # 'templates.xml',
         'view/sewain.xml',
+        'view/peminjaman.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="peminjaman_form_view">
+            <field name="name">peminjaman.form</field>
+            <field name="model">sewain.peminjaman</field>
+            <field name="arch" type="xml">
+                <form string="Peminjaman Form">
+                    <header>
+                        <button name="action_draft" type="object"
+                                string="Reset to draft"
+                                states="confirmed,done"/>
+                        <button name="action_confirm" type="object"
+                                string="Confirm" states="draft"
+                                class="oe_highlight"/>
+                        <button name="action_done" type="object"
+                                string="Mark as done" states="confirmed"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="item_id"/>
+                            <field name="kuantitas"/>
+                            <field name="waktu_mulai"/>
+                            <field name="durasi"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_peminjaman_form" model="ir.actions.act_window">
+            <field name="name">Form Peminjaman</field>
+            <field name="res_model">sewain.peminjaman</field>
+            <field name="src_model">sewain.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'order_id': active_id}</field>
+        </record>
+        <record model="ir.ui.view" id="view_peminjaman_item_kanban">
+            <field name="name">sewain.peminjaman.kanban</field>
+            <field name="model">sewain.peminjaman</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="warna"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.warna.raw_value)}}
+                                                  oe_semantic_html_override
+                                                  oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div t-attf-class="oe_kanban_content">
+                                    Nama Barang:
+                                    <field name="item_id"/>
+                                    <br/>
+                                    Jumlah : <field name="kuantitas"/>
+                                    <br/>
+                                    Tanggal Mulai : <field name="waktu_mulai"/>
+                                    <br/>
+                                    Tanggal Selesai : <field name="waktu_selesai"/>
+                                    <br/>
+                                    Durasi : <field name="durasi"/>
+                                    <br/>
+                                    Harga :
+                                    <field name="sub_total"/>
+                                </div>
+                                <div class="pull-right">
+                                    <button name="%(peminjaman_form_view)d" type="action" string="Submit" />
+                                </div>                                
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+        <record model="ir.actions.act_window" id="daftar_item_peminjaman_action">
+            <field name="name">Peminjaman</field>
+            <field name="res_model">sewain.peminjaman</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Tambahkan item baru
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_peminjaman" name="Peminjaman" parent="menu_sewain"
+                  action="daftar_item_peminjaman_action"/>
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+    </data>
+</openerp>

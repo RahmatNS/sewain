@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="peminjaman_form_view">
+            <field name="name">peminjaman.form</field>
+            <field name="model">sewain.peminjaman</field>
+            <field name="arch" type="xml">
+                <form string="Peminjaman Form">
+                    <header>
+                        <button name="action_draft" type="object"
+                                string="Reset to draft"
+                                states="confirmed,done"/>
+                        <button name="action_confirm" type="object"
+                                string="Confirm" states="draft"
+                                class="oe_highlight"/>
+                        <button name="action_done" type="object"
+                                string="Mark as done" states="confirmed"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="item_id"/>
+                            <field name="kuantitas"/>
+                            <field name="waktu_mulai"/>
+                            <field name="durasi"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
         <record model="ir.ui.view" id="item_form_view">
             <field name="name">item.form</field>
             <field name="model">sewain.item</field>
@@ -53,6 +81,10 @@
                                         </ul>
                                     </div>
                                     <div class="oe_clear"></div>
+                                </div>
+
+                                <div class="pull-right">
+                                    <button name="%(peminjaman_form_view)d" type="action" string="Submit" class="oe_inline oe_stat_button"> Sewa </button>
                                 </div>
                                 
                             </div>

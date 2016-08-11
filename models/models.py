@@ -28,6 +28,24 @@ class Peminjaman(models.Model):
     transaksi_id = fields.Many2one('sewain.transaksi',
         ondelete='set null', string="Member", index=True)
 
+    state = fields.Selection([
+        ('draft', "Draft"),
+        ('confirmed', "Confirmed"),
+        ('done', "Done"),
+    ], default='draft')
+
+    @api.multi
+    def action_draft(self):
+        self.state = 'draft'
+
+    @api.multi
+    def action_confirm(self):
+        self.state = 'confirmed'
+
+    @api.multi
+    def action_done(self):
+        self.state = 'done'
+        
     @api.depends('waktu_mulai', 'durasi')
     def _get_waktu_selesai(self):
         for r in self:
