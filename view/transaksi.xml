@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="transaksi_form_view">
+            <field name="name">transaksi.form</field>
+            <field name="model">sewain.transaksi</field>
+            <field name="arch" type="xml">
+                <form string="Peminjaman Form">
+                    <sheet>
+                        <group>
+                            <field name="peminjaman_ids" view_type="form">
+                                <field name="waktu_mulai"/>
+                                <field name="waktu_selesai"/>
+                                
+                            </field>
+                        </group>
+                        <group>
+                            <field name="total_harga"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="transaksi_tree_view">
+            <field name="name">transaksi.tree</field>
+            <field name="model">sewain.transaksi</field>
+            <field name="arch" type="xml">
+                <tree string="Idea list">
+                    <field name="peminjaman_ids"/>
+                    <field name="total_harga"/>
+                </tree>
+            </field>
+
+        </record>
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+        <record model="ir.actions.act_window" id="daftar_item_transaksi_action">
+            <field name="name">Transaksi</field>
+            <field name="res_model">sewain.transaksi</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Tambahkan item baru
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_transaksi" name="Checkout" parent="menu_sewain"
+                  action="daftar_item_transaksi_action"/>
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+    </data>
+</openerp>

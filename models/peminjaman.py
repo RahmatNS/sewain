@@ -1,27 +1,18 @@
 from openerp import models,fields,api
 from datetime import timedelta
 
-class Item(models.Model):
-    _name = 'sewain.item'
-
-    nama = fields.Char(required=True)
-    harga = fields.Integer(string="Harga sewa per jam", required=True)
-    jumlah = fields.Integer(string="Jumlah item tersedia", required=True,default=1)
-    deskripsi = fields.Text(string="Keterangan")
-    peminjaman_ids = fields.One2many(
-        'sewain.peminjaman', 'item_id', string="Peminjaman")
-    warna = fields.Integer()
-
 class Peminjaman(models.Model):
     _name = 'sewain.peminjaman'
 
     item_id = fields.Many2one('sewain.item',
         ondelete='set null', string="Item", index=True)
+    item_name = fields.Char(string="Nama",store=False, compute='_get_item_name')
     kuantitas = fields.Integer(string="Jumlah item", required=True,default=1)
     waktu_mulai = fields.Date(default=fields.Date.today)
     durasi = fields.Float(digits=(6, 2), help="Duration in days")
     waktu_selesai = fields.Date(string="Waktu Selesai", store=True,
         compute='_get_waktu_selesai', inverse='_set_waktu_selesai')
+    harga_dasar = fields.Integer(string="Harga Dasar",store=True,compute="_get_harga_dasar")
     sub_total = fields.Integer(string="Sub Total", store=True,
         compute='_get_sub_total', inverse='_set_sub_total')
     warna = fields.Integer()
@@ -33,6 +24,11 @@ class Peminjaman(models.Model):
         ('confirmed', "Confirmed"),
         ('done', "Done"),
     ], default='draft')
+
+    @api.depends('item_id.nama','item_id')
+    def _get_item_name(self):
+        for r in self:
+            r.item_name = r.item_id.nama
 
     @api.multi
     def action_draft(self):
@@ -58,21 +54,21 @@ class Peminjaman(models.Model):
             start = fields.Datetime.from_string(r.waktu_mulai)
             duration = timedelta(days=r.durasi, seconds=-1)
             r.waktu_selesai = start + duration
-    @api.depends('item_id.harga', 'durasi','item_id')
+
+    @api.depends('item_id.harga','item_id')
+    def _get_harga_dasar(self):
+        for r in self:
+            r.harga_dasar = r.item_id.harga
+
+    @api.depends('harga_dasar', 'durasi','kuantitas')
     def _get_sub_total(self):
         for r in self:
-            r.sub_total = r.item_id.harga * r.durasi
+            r.sub_total = r.harga_dasar * r.durasi * r.kuantitas
 
-class Transaksi(models.Model):
-    _name = 'sewain.transaksi'
-    user_id = fields.Many2one('res.users',
-        ondelete='set null', string="Member", index=True)
 
-    peminjaman_ids = fields.One2many(
-        'sewain.peminjaman', 'transaksi_id', string="Peminjaman")
-    total_harga = fields.Integer(string="Total Harga", store=True,
-        compute='_get_total_harga', inverse='_set_total_harga')
-    @api.depends('peminjaman_ids.sub_total', 'peminjaman_ids')
-    def _get_total_harga(self):
+    @api.multi
+    def confirm(self, context):
         for r in self:
-            r.total_harga += r.peminjaman_ids.sub_total
+            print "+++++++++++++++++++++++++="
+            r.state = "draft"
+            print r.state

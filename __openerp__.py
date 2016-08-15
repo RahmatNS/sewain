@@ -24,12 +24,17 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        # 'security/security.xml',
         # 'templates.xml',
         'view/sewain.xml',
         'view/peminjaman.xml',
+        'view/transaksi.xml',
+        'view/pinjam_wizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo.xml',
     ],
 }
+# rahmath322ue
+# maksimal trip 30,000

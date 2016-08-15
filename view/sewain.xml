@@ -1,34 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <record model="ir.ui.view" id="peminjaman_form_view">
-            <field name="name">peminjaman.form</field>
-            <field name="model">sewain.peminjaman</field>
-            <field name="arch" type="xml">
-                <form string="Peminjaman Form">
-                    <header>
-                        <button name="action_draft" type="object"
-                                string="Reset to draft"
-                                states="confirmed,done"/>
-                        <button name="action_confirm" type="object"
-                                string="Confirm" states="draft"
-                                class="oe_highlight"/>
-                        <button name="action_done" type="object"
-                                string="Mark as done" states="confirmed"
-                                class="oe_highlight"/>
-                        <field name="state" widget="statusbar"/>
-                    </header>
-                    <sheet>
-                        <group>
-                            <field name="item_id"/>
-                            <field name="kuantitas"/>
-                            <field name="waktu_mulai"/>
-                            <field name="durasi"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
         <record model="ir.ui.view" id="item_form_view">
             <field name="name">item.form</field>
             <field name="model">sewain.item</field>
@@ -38,7 +10,6 @@
                         <group>
                             <field name="nama"/>
                             <field name="harga"/>
-                            <field name="jumlah"/>
                             <field name="deskripsi"/>
                         </group>
                     </sheet>
@@ -55,13 +26,11 @@
                         <t t-name="kanban-box">
                             <div
                                     t-attf-class="oe_kanban_color_{{kanban_getcolor(record.warna.raw_value)}}
-                                                  oe_kanban_global_click_edit oe_semantic_html_override
+                                                  oe_kanban_global_click oe_semantic_html_override
                                                   oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
                                 <div t-attf-class="oe_kanban_content">
                                     Nama :
                                     <field name="nama"/>
-                                    <br/>
-                                    Jumlah : <field name="jumlah"/>
                                     <br/>
                                     Harga :
                                     <field name="harga"/>
@@ -82,11 +51,6 @@
                                     </div>
                                     <div class="oe_clear"></div>
                                 </div>
-
-                                <div class="pull-right">
-                                    <button name="%(peminjaman_form_view)d" type="action" string="Submit" class="oe_inline oe_stat_button"> Sewa </button>
-                                </div>
-                                
                             </div>
                         </t>
                     </templates>
@@ -108,7 +72,13 @@
                 </p>
             </field>
         </record>
-
+        <act_window id="confirm_peminjaman"
+                    name="Confirm"
+                    src_model="sewain.peminjaman"
+                    res_model="sewain.transaksi"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"/>
         <!-- top level menu: no parent -->
         <menuitem id="menu_utama_sewain" name="Sewain App"/>
         <!-- A first level in the left side menu is needed

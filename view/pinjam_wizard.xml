@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="pinjam_wizard_form_view">
+            <field name="name">pinjam_wizard.form</field>
+            <field name="model">sewain.pinjam_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Tambah peminjaman">
+                    <group>
+                        <field name="item_id" invisible="1"/>
+                        <field name="item_name"/>
+                        <field name="kuantitas"/>
+                        <field name="waktu_mulai"/>
+                        <field name="durasi"/>
+                    </group>
+                    <footer>
+                        <button name="sewa_item" string="Sewa item" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="launch_peminjaman_wizard"
+                    name="Peminjaman"
+                    src_model="sewain.item"
+                    res_model="sewain.pinjam_wizard"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"/>
+    </data>
+</openerp>

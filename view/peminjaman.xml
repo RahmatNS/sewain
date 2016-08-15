@@ -20,7 +20,7 @@
                     </header>
                     <sheet>
                         <group>
-                            <field name="item_id"/>
+                            <field name="item_name"/>
                             <field name="kuantitas"/>
                             <field name="waktu_mulai"/>
                             <field name="durasi"/>
@@ -28,15 +28,6 @@
                     </sheet>
                 </form>
             </field>
-        </record>
-        <record id="action_peminjaman_form" model="ir.actions.act_window">
-            <field name="name">Form Peminjaman</field>
-            <field name="res_model">sewain.peminjaman</field>
-            <field name="src_model">sewain.item</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-            <field name="context">{'order_id': active_id}</field>
         </record>
         <record model="ir.ui.view" id="view_peminjaman_item_kanban">
             <field name="name">sewain.peminjaman.kanban</field>
@@ -52,7 +43,7 @@
                                                   oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
                                 <div t-attf-class="oe_kanban_content">
                                     Nama Barang:
-                                    <field name="item_id"/>
+                                    <field name="item_name"/>
                                     <br/>
                                     Jumlah : <field name="kuantitas"/>
                                     <br/>
@@ -62,12 +53,23 @@
                                     <br/>
                                     Durasi : <field name="durasi"/>
                                     <br/>
-                                    Harga :
+                                    Harga Dasar :
+                                    <field name="harga_dasar"/>
+                                    <br/>
+                                    Subtotal :
                                     <field name="sub_total"/>
-                                </div>
-                                <div class="pull-right">
-                                    <button name="%(peminjaman_form_view)d" type="action" string="Submit" />
-                                </div>                                
+                                    <br/>
+                                    Status :
+                                    <field name="state">
+                                        <button name="confirm" type="object" class="oe-highlight">Confirm</button>
+                                    <t t-if="state=='draft'">
+                                        <button name="confirm" type="object" class="oe-highlight">Confirm</button>
+                                    </t>
+                                    <t t-if="state=='confirmed'">
+                                        <span class="fa fa-check oe-highlight"> Confirmed</span>
+                                    </t>
+                                    </field>                   
+                                </div>                             
                             </div>
                         </t>
                     </templates>
@@ -90,7 +92,7 @@
             </field>
         </record>
 
-        <menuitem id="menu_peminjaman" name="Peminjaman" parent="menu_sewain"
+        <menuitem id="menu_peminjaman" name="Cart" parent="menu_sewain"
                   action="daftar_item_peminjaman_action"/>
         <!-- Full id location:
              action="openacademy.course_list_action"
