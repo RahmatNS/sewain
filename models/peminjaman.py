@@ -5,7 +5,7 @@ class Peminjaman(models.Model):
     _name = 'sewain.peminjaman'
 
     item_id = fields.Many2one('sewain.item',
-        ondelete='set null', string="Item", index=True)
+        ondelete='set null', string="Kode Item", index=True)
     item_name = fields.Char(string="Nama",store=False, compute='_get_item_name')
     kuantitas = fields.Integer(string="Jumlah item", required=True,default=1)
     waktu_mulai = fields.Date(default=fields.Date.today)

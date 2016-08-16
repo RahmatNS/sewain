@@ -9,9 +9,13 @@
                     <sheet>
                         <group>
                             <field name="peminjaman_ids" view_type="form">
+                                <field name="item_name"/>
                                 <field name="waktu_mulai"/>
                                 <field name="waktu_selesai"/>
-                                
+                                <field name="durasi"/>
+                                <field name="kuantitas"/>
+                                <field name="harga_dasar"/>
+                                <field name="sub_total"/>
                             </field>
                         </group>
                         <group>
@@ -26,7 +30,17 @@
             <field name="model">sewain.transaksi</field>
             <field name="arch" type="xml">
                 <tree string="Idea list">
-                    <field name="peminjaman_ids"/>
+                    <field name="peminjaman_ids">
+                        <tree string="Detail Peminjaman">
+                            <field name="item_name"/>
+                            <field name="waktu_mulai"/>
+                            <field name="waktu_selesai"/>
+                            <field name="durasi"/>
+                            <field name="kuantitas"/>
+                            <field name="harga_dasar"/>
+                            <field name="sub_total"/>
+                        </tree>
+                    </field>
                     <field name="total_harga"/>
                 </tree>
             </field>

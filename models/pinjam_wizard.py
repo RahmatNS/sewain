@@ -25,7 +25,3 @@ class Pinjam_wizard(models.TransientModel):
             'waktu_mulai': self.waktu_mulai,
             'durasi': self.durasi
         })
-        transaksi_class = self.env['sewain.transaksi']
-        transaksi_class.create({
-            'peminjaman_ids': [(4, peminjaman_id.id)]
-            })

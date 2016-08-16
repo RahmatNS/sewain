@@ -30,6 +30,7 @@
         'view/peminjaman.xml',
         'view/transaksi.xml',
         'view/pinjam_wizard.xml',
+        'view/checkout_wizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

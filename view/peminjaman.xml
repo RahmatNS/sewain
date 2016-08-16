@@ -23,10 +23,28 @@
                             <field name="item_name"/>
                             <field name="kuantitas"/>
                             <field name="waktu_mulai"/>
+                            <field name="waktu_selesai"/>
                             <field name="durasi"/>
+                            <field name="harga_dasar"/>
+                            <field name="sub_total"/>
                         </group>
                     </sheet>
                 </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="peminjaman_tree_view">
+            <field name="name">sewain.peminjaman.tree</field>
+            <field name="model">sewain.peminjaman</field>
+            <field name="arch" type="xml">
+                <tree string="Idea list">
+                    <field name="item_name"/>
+                    <field name="kuantitas"/>
+                    <field name="waktu_mulai"/>
+                    <field name="waktu_selesai"/>
+                    <field name="durasi"/>
+                    <field name="harga_dasar"/>
+                    <field name="sub_total"/>
+                </tree>
             </field>
         </record>
         <record model="ir.ui.view" id="view_peminjaman_item_kanban">

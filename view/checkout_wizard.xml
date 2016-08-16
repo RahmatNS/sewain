@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="checkout_wizard_form_view">
+            <field name="name">checkout_wizard.form</field>
+            <field name="model">sewain.checkout_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Checkout">
+                    <group>
+                        <field name="peminjaman_ids">
+                            <tree string="Detail Peminjaman">
+                                <field name="item_name"/>
+                                <field name="waktu_mulai"/>
+                                <field name="waktu_selesai"/>
+                                <field name="durasi"/>
+                                <field name="kuantitas"/>
+                                <field name="harga_dasar"/>
+                                <field name="sub_total"/>
+                            </tree>
+                        </field>
+                        <!-- <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Nama Item</th>
+                                    <th>Peminjaman ID</th>
+                                    <th>Kauntitas</th>
+                                    <th>Hrg Satuan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="peminjaman_ids" t-as="p">
+                                    <td><span t-field="p.waktu_mulai"/></td>
+                                    <td><span t-field="p.waktu_selesai"/></td>
+                                    <td><span t-field="p.kuantitas"/></td>
+                                    <td><span t-field="p.harga_dasar"/></td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+                    </group>
+                    <group>
+                        <field name="total_harga"/>
+                    </group>
+                    <footer>
+                        <button name="checkout" string="Checkout" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="launch_checkout_wizard"
+                    name="Checkout"
+                    src_model="sewain.peminjaman"
+                    res_model="sewain.checkout_wizard"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"/>
+    </data>
+</openerp>
