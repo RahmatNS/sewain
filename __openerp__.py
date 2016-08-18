@@ -29,8 +29,9 @@
         'view/sewain.xml',
         'view/peminjaman.xml',
         'view/transaksi.xml',
-        'view/pinjam_wizard.xml',
-        'view/checkout_wizard.xml',
+        'wizard/pinjam_wizard.xml',
+        'wizard/checkout_wizard.xml',
+        'report/reports.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

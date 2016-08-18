@@ -1,0 +1,53 @@
+<openerp>
+<data>
+    <report
+        id="report_transaksi"
+        model="sewain.transaksi"
+        string="Transaksi Report"
+        name="sewain.report_transaksi_view"
+        file="sewain.report_transaksi"
+        report_type="qweb-pdf" />
+
+    <template id="report_transaksi_view">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <!-- <h2 t-field="doc.name"/> -->
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Durasi</th>
+                                    <th>Qty</th>
+                                    <th>@Harga</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <tr t-foreach="doc.peminjaman_ids" t-as="p">
+                                    <td><span t-field="p.item_name"/></td>
+                                    <td><span t-field="p.waktu_mulai"/></td>
+                                    <td><span t-field="p.waktu_selesai"/></td>
+                                    <td><span t-field="p.durasi"/></td>
+                                    <td><span t-field="p.kuantitas"/></td>
+                                    <td><span t-field="p.harga_dasar"/></td>
+                                    <td><span t-field="p.sub_total"/></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" align="right">Total Harga : </td>
+                                    <td><span t-field="doc.total_harga"/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

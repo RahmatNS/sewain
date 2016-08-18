@@ -47,53 +47,6 @@
                 </tree>
             </field>
         </record>
-        <record model="ir.ui.view" id="view_peminjaman_item_kanban">
-            <field name="name">sewain.peminjaman.kanban</field>
-            <field name="model">sewain.peminjaman</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    <field name="warna"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div
-                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.warna.raw_value)}}
-                                                  oe_semantic_html_override
-                                                  oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
-                                <div t-attf-class="oe_kanban_content">
-                                    Nama Barang:
-                                    <field name="item_name"/>
-                                    <br/>
-                                    Jumlah : <field name="kuantitas"/>
-                                    <br/>
-                                    Tanggal Mulai : <field name="waktu_mulai"/>
-                                    <br/>
-                                    Tanggal Selesai : <field name="waktu_selesai"/>
-                                    <br/>
-                                    Durasi : <field name="durasi"/>
-                                    <br/>
-                                    Harga Dasar :
-                                    <field name="harga_dasar"/>
-                                    <br/>
-                                    Subtotal :
-                                    <field name="sub_total"/>
-                                    <br/>
-                                    Status :
-                                    <field name="state">
-                                        <button name="confirm" type="object" class="oe-highlight">Confirm</button>
-                                    <t t-if="state=='draft'">
-                                        <button name="confirm" type="object" class="oe-highlight">Confirm</button>
-                                    </t>
-                                    <t t-if="state=='confirmed'">
-                                        <span class="fa fa-check oe-highlight"> Confirmed</span>
-                                    </t>
-                                    </field>                   
-                                </div>                             
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
         <!-- window action -->
         <!--
             The following tag is an action definition for a "window action",
@@ -103,7 +56,7 @@
             <field name="name">Peminjaman</field>
             <field name="res_model">sewain.peminjaman</field>
             <field name="view_type">form</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Tambahkan item baru
                 </p>
